@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Points Table - Cricket Tournament</title>
+    <meta name="description" content="View points table for all teams">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/index.html" class="logo">🏏 CricketManager</a>
+        <ul class="navbar-links">
+            <li><a href="/index.html">Dashboard</a></li>
+            <li><a href="/add_tournament.html">Add Tournament</a></li>
+            <li><a href="/add_team.html">Add Team</a></li>
+            <li><a href="/add_player.html">Add Player</a></li>
+            <li><a href="/schedule_match.html">Schedule Match</a></li>
+            <li><a href="/enter_score.html">Enter Score</a></li>
+            <li><a href="/points_table.html" class="active">Points Table</a></li>
+            <li><a href="/view_data.html">View Data</a></li>
+        </ul>
+    </nav>
+
+    <div class="container" id="pointsTableContainer">
+        <div class="card">
+            <h2>🏆 Team Points Table</h2>
+            <div class="form-group" style="margin-bottom: 2rem;">
+                <label for="pointsTournamentFilter">Select Tournament</label>
+                <select id="pointsTournamentFilter" class="form-control">
+                    <option value="">All Tournaments</option>
+                </select>
+            </div>
+            <div class="table-container">
+                <table id="pointsTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Team Name</th>
+                            <th>Matches Played</th>
+                            <th>Wins</th>
+                            <th>Losses</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
