@@ -7,7 +7,7 @@ async function submitForm(formId, endpoint) {
         e.preventDefault();
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
-        
+
         try {
             const response = await fetch(`/api/${endpoint}`, {
                 method: 'POST',
@@ -16,10 +16,10 @@ async function submitForm(formId, endpoint) {
                 },
                 body: JSON.stringify(data)
             });
-            
+
             const result = await response.json();
             const alertBox = document.getElementById('alertMessage');
-            
+
             if (response.ok) {
                 alertBox.className = 'alert success';
                 alertBox.textContent = result.message || 'Operation successful!';
@@ -44,11 +44,11 @@ async function populateSelect(endpoint, selectId, valueField, textField) {
     try {
         const response = await fetch(`/api/${endpoint}`);
         const data = await response.json();
-        
+
         data.forEach(item => {
             const option = document.createElement('option');
             option.value = item[valueField];
-            
+
             // Handle nested objects (like team_name in team_id)
             if (textField.includes('.')) {
                 const fields = textField.split('.');
@@ -65,6 +65,11 @@ async function populateSelect(endpoint, selectId, valueField, textField) {
 
 // Page Specific Initializations
 document.addEventListener('DOMContentLoaded', () => {
+
+    // INDEX PAGE STATS
+    if (document.getElementById('totalTournaments')) {
+        loadDashboardStats();
+    }
     // Add Tournament Page
     if (document.getElementById('addTournamentForm')) {
         submitForm('addTournamentForm', 'addTournament');
@@ -141,8 +146,8 @@ async function populateMatchesDropdown() {
     function renderMatches(tournamentId) {
         select.innerHTML = '<option value="">Select Match</option>';
         teamSelect.innerHTML = '<option value="">Select Team</option>';
-        
-        const filteredMatches = tournamentId 
+
+        const filteredMatches = tournamentId
             ? allMatches.filter(m => m.tournament_id && m.tournament_id._id === tournamentId)
             : allMatches;
 
@@ -171,15 +176,15 @@ async function populateMatchesDropdown() {
         teamSelect.innerHTML = '<option value="">Select Team (Innings)</option>';
         if (e.target.value) {
             const selectedOption = e.target.options[e.target.selectedIndex];
-            
+
             const opt1 = document.createElement('option');
             opt1.value = selectedOption.dataset.team1Id;
             opt1.textContent = selectedOption.dataset.team1Name;
-            
+
             const opt2 = document.createElement('option');
             opt2.value = selectedOption.dataset.team2Id;
             opt2.textContent = selectedOption.dataset.team2Name;
-            
+
             teamSelect.appendChild(opt1);
             teamSelect.appendChild(opt2);
         }
@@ -203,7 +208,7 @@ async function loadDashboardData(tournamentId) {
                 tbody.innerHTML += `<tr><td>${t.team_name}</td><td>${t.coach}</td></tr>`;
             });
         }
-    } catch(e) { console.error(e); }
+    } catch (e) { console.error(e); }
 
     // Load Players
     try {
@@ -217,7 +222,7 @@ async function loadDashboardData(tournamentId) {
                 tbody.innerHTML += `<tr><td>${p.player_name}</td><td>${p.age}</td><td>${p.role}</td><td>${p.team_id ? p.team_id.team_name : 'N/A'}</td></tr>`;
             });
         }
-    } catch(e) { console.error(e); }
+    } catch (e) { console.error(e); }
 
     // Load Points Table
     loadPointsTable(tournamentId, '#dashboardPointsTable tbody');
@@ -233,10 +238,10 @@ async function loadPointsTable(tournamentId = '', selector = '#pointsTable tbody
         const points = await res.json();
         const tbody = document.querySelector(selector);
         if (!tbody) return;
-        
+
         tbody.innerHTML = '';
         if (points.length === 0) tbody.innerHTML = '<tr><td colspan="6">No points data available.</td></tr>';
-        
+
         points.forEach((p, index) => {
             tbody.innerHTML += `<tr>
                 <td>${index + 1}</td>
@@ -247,7 +252,7 @@ async function loadPointsTable(tournamentId = '', selector = '#pointsTable tbody
                 <td><strong>${p.points}</strong></td>
             </tr>`;
         });
-    } catch(e) { console.error('Error loading points table:', e); }
+    } catch (e) { console.error('Error loading points table:', e); }
 }
 
 let allGroupedMatches = [];
@@ -256,7 +261,7 @@ async function loadGroupedMatches(tournamentIdFilter = '') {
     try {
         const res = await fetch('/api/matches-grouped');
         allGroupedMatches = await res.json();
-        
+
         renderGroupedMatches(tournamentIdFilter);
     } catch (e) { console.error('Error loading grouped matches:', e); }
 }
@@ -264,18 +269,19 @@ async function loadGroupedMatches(tournamentIdFilter = '') {
 function renderGroupedMatches(filterId) {
     const container = document.getElementById('tournamentResultsContainer');
     if (!container) return;
-    
+
     container.innerHTML = '';
-    
-    const tournamentsToRender = !filterId 
-        ? allGroupedMatches 
+
+    const tournamentsToRender = !filterId
+        ? allGroupedMatches
         : allGroupedMatches.filter(t => t._id === filterId);
-        
+
     if (tournamentsToRender.length === 0) {
         container.innerHTML = '<p style="text-align:center; padding: 2rem;">No matches found for this tournament.</p>';
         return;
     }
-        
+
+
     tournamentsToRender.forEach(t => {
         let matchesHtml = '';
         if (t.matches && t.matches.length > 0) {
@@ -283,13 +289,13 @@ function renderGroupedMatches(filterId) {
                 const date = new Date(m.date).toLocaleDateString();
                 const t1Name = m.team1 ? m.team1.team_name : 'Unknown';
                 const t2Name = m.team2 ? m.team2.team_name : 'Unknown';
-                
+
                 const t1ScoreStr = m.team1_score ? `${m.team1_score.runs}/${m.team1_score.wickets}` : 'N/A';
                 const t2ScoreStr = m.team2_score ? `${m.team2_score.runs}/${m.team2_score.wickets}` : 'N/A';
-                
+
                 let winnerText = '';
                 let highlightClass = '';
-                
+
                 if (m.winner_id) {
                     const winnerName = m.winner_id === (m.team1 ? m.team1._id : null) ? t1Name : t2Name;
                     winnerText = `<span class="winner-text">Winner: ${winnerName} 🏆</span>`;
@@ -323,4 +329,19 @@ function renderGroupedMatches(filterId) {
             </div>
         `;
     });
+
+}
+async function loadDashboardStats() {
+    try {
+        const res = await fetch('/api/tournaments');
+        const data = await res.json();
+
+        const el = document.getElementById('totalTournaments');
+        if (el) {
+            el.innerText = data.length || 0;
+        }
+
+    } catch (error) {
+        console.error(error);
+    }
 }

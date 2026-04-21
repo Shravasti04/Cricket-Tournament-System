@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <nav class="navbar">
         <a href="/index.html" class="logo">🏏 CricketManager</a>
@@ -24,9 +26,22 @@
     </nav>
 
     <div class="container">
+
+        <div class="card">
+            <h2>Welcome to CricketManager</h2>
+            <p>Manage your entire cricket tournament efficiently. Use the navigation links above to register teams,
+                players, schedule matches, and record scores.</p>
+            <br>
+            <a href="/view_data.html" class="btn">View Tournament Data</a>
+        </div>
+
         <h1>Tournament Dashboard</h1>
-        
+
         <div class="dashboard-grid">
+            <div class="stat-card">
+                <h3>Total Tournaments</h3>
+                <div class="value" id="totalTournaments">0</div>
+            </div>
             <div class="stat-card">
                 <h3>Total Teams</h3>
                 <div class="value" id="teamsCount">-</div>
@@ -39,13 +54,6 @@
                 <h3>Total Matches</h3>
                 <div class="value" id="matchesCount">-</div>
             </div>
-        </div>
-
-        <div class="card">
-            <h2>Welcome to CricketManager</h2>
-            <p>Manage your entire cricket tournament efficiently. Use the navigation links above to register teams, players, schedule matches, and record scores.</p>
-            <br>
-            <a href="/view_data.html" class="btn">View Tournament Data</a>
         </div>
     </div>
 
@@ -62,8 +70,9 @@
                 document.getElementById('teamsCount').textContent = teams.length || 0;
                 document.getElementById('playersCount').textContent = players.length || 0;
                 document.getElementById('matchesCount').textContent = matches.length || 0;
-            } catch(e) { console.error('Dashboard error:', e); }
+            } catch (e) { console.error('Dashboard error:', e); }
         });
     </script>
 </body>
+
 </html>

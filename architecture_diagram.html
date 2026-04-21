@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architecture Diagram</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .diagram-container {
+            background-color: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 50px;
+            font-size: 2rem;
+        }
+        .architecture {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .tier {
+            width: 220px;
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border: 2px solid transparent;
+            position: relative;
+            color: white;
+        }
+        .tier h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+        }
+        .tier p {
+            font-size: 1rem;
+            margin: 8px 0;
+        }
+        .frontend {
+            background: linear-gradient(135deg, #FF6B6B, #EE5A24);
+        }
+        .backend {
+            background: linear-gradient(135deg, #4834D4, #686DE0);
+        }
+        .database {
+            background: linear-gradient(135deg, #10AC84, #1DD1A1);
+        }
+        .arrow-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 180px;
+        }
+        .arrow-text {
+            font-size: 0.9rem;
+            color: #34495e;
+            font-weight: bold;
+            text-align: center;
+            margin: 5px 0;
+        }
+        .arrow-line {
+            width: 100%;
+            height: 4px;
+            background-color: #95a5a6;
+            position: relative;
+            margin: 15px 0;
+        }
+        .arrow-right::after {
+            content: '';
+            position: absolute;
+            right: -2px;
+            top: -6px;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 14px solid #95a5a6;
+        }
+        .arrow-left::before {
+            content: '';
+            position: absolute;
+            left: -2px;
+            top: -6px;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 14px solid #95a5a6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="diagram-container">
+    <h2>3-Tier System Architecture<br><span style="font-size: 1.2rem; color: #7f8c8d; font-weight: normal;">Cricket Tournament Management System</span></h2>
+    
+    <div class="architecture">
+        
+        <!-- Presentation Tier -->
+        <div class="tier frontend">
+            <h3>Client Layer<br>(Frontend)</h3>
+            <p><strong>HTML5</strong></p>
+            <p><strong>CSS3</strong></p>
+            <p><strong>JavaScript</strong></p>
+            <p style="margin-top:25px; font-style:italic; font-size: 0.85rem; opacity: 0.9;">Web Browser</p>
+        </div>
+
+        <!-- Arrows 1 -->
+        <div class="arrow-container">
+            <div class="arrow-text">HTTP POST / GET</div>
+            <div class="arrow-line arrow-right"></div>
+            <div class="arrow-line arrow-left"></div>
+            <div class="arrow-text">JSON Responses</div>
+        </div>
+
+        <!-- Application Tier -->
+        <div class="tier backend">
+            <h3>Application Layer<br>(Backend)</h3>
+            <p><strong>Node.js</strong></p>
+            <p><strong>Express.js</strong></p>
+            <p><strong>Mongoose Models</strong></p>
+            <p style="margin-top:25px; font-style:italic; font-size: 0.85rem; opacity: 0.9;">API Server</p>
+        </div>
+
+        <!-- Arrows 2 -->
+        <div class="arrow-container">
+            <div class="arrow-text">Mongoose Queries</div>
+            <div class="arrow-line arrow-right"></div>
+            <div class="arrow-line arrow-left"></div>
+            <div class="arrow-text">BSON / Documents</div>
+        </div>
+
+        <!-- Data Tier -->
+        <div class="tier database">
+            <h3>Database Layer<br>(Data Tier)</h3>
+            <p><strong>MongoDB</strong></p>
+            <p><strong>Collections</strong></p>
+            <p><strong>Aggregations</strong></p>
+            <p style="margin-top:25px; font-style:italic; font-size: 0.85rem; opacity: 0.9;">NoSQL Database</p>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
